@@ -9,7 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use App\Form\Type\CarType;
 
 class CarController extends AbstractController
 {
@@ -51,5 +53,31 @@ class CarController extends AbstractController
                 ['groups' => 'show_car']
             )
         );
+    }
+
+    /** 
+     * @Route("/car", methods={"POST"})
+     */
+    public function create(Request $request, EntityManagerInterface $entityManager): Response
+    {
+
+        $form = $this->createForm(CarType::class);
+        $form->submit($request->request->all());
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $car = $form->getData();
+
+            // persist in database
+            $entityManager->persist($car);
+            $entityManager->flush();
+        } else {
+            return new JsonResponse(CarType::getErrors($form), Response::HTTP_BAD_REQUEST);
+        }
+        
+        return new JsonResponse([
+            "status" => "Create success", 
+            "statusCode" => 0
+        ], Response::HTTP_CREATED);
+
     }
 }

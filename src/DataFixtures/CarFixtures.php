@@ -36,9 +36,6 @@ class CarFixtures extends Fixture
             ->setStars(5);
         $manager->persist($car2);
 
-
-
-
         $manager->flush();
     }
 }

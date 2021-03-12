@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\CarRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=CarRepository::class)
@@ -46,12 +48,14 @@ class Car
     /**
      * @ORM\Column(type="integer")
      * @Groups({"show_car"})
+     * @Assert\GreaterThanOrEqual(2)
      */
     private $numberOfPlaces = 2;
 
     /**
      * @ORM\Column(type="integer")
      * @Groups({"show_car"})
+     * @Assert\GreaterThanOrEqual(1)
      */
     private $numberOfDoors = 2;
 
@@ -70,8 +74,15 @@ class Car
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"list_car"})
+     * @Assert\GreaterThanOrEqual(0)
+     * @Assert\LessThanOrEqual(5)
      */
     private $stars;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $thumbnail;
 
     public function getId(): ?int
     {
@@ -182,6 +193,18 @@ class Car
     public function setStars(?int $stars): self
     {
         $this->stars = $stars;
+
+        return $this;
+    }
+
+    public function getThumbnail(): ?string
+    {
+        return $this->thumbnail;
+    }
+
+    public function setThumbnail(?string $thumbnail): self
+    {
+        $this->thumbnail = $thumbnail;
 
         return $this;
     }
