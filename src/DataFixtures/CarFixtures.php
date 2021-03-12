@@ -11,9 +11,7 @@ class CarFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        // $product = new Product();
-        // $manager->persist($product);
-
+        
         $car1 = new Car();
         $car1->setBrands("Peugeot")
             ->setModel("2008")

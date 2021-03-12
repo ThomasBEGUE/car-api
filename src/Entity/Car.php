@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CarRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CarRepository::class)
@@ -14,51 +15,61 @@ class Car
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"list_car"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"list_car", "show_car"})
      */
     private $brands;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"list_car", "show_car"})
      */
     private $model;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"show_car"})
      */
     private $registration;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"list_car", "show_car"})
      */
     private $fuel;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"show_car"})
      */
     private $numberOfPlaces = 2;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"show_car"})
      */
     private $numberOfDoors = 2;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"show_car"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"list_car", "show_car"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"list_car"})
      */
     private $stars;
 
